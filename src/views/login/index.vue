@@ -77,9 +77,9 @@ export default {
         if (valid) {
           this.loading = true
           if (user.rememberMe) {
-            Cookies.set('username', user.username, { expires: 1 })
-            Cookies.set('password', user.password, { expires: 1 })
-            Cookies.set('rememberMe', user.rememberMe, { expires: 1 })
+            Cookies.set('username', user.username, { expires: 10 })
+            Cookies.set('password', user.password, { expires: 10 })
+            Cookies.set('rememberMe', user.rememberMe, { expires: 10 })
           } else {
             Cookies.remove('username')
             Cookies.remove('password')
