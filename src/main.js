@@ -13,10 +13,11 @@ import 'iview/dist/styles/iview.css';
 import App from './App'
 import router from './router'
 import store from './store'
+import storage from './storage'
 
 import '@/icons' // icon
 import './permission' // permission control
-
+Vue.prototype.$storage = storage
 Vue.use(iView);
 Vue.use(ElementUI, { locale })
 Vue.config.productionTip = false

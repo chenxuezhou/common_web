@@ -5,6 +5,7 @@ import 'nprogress/nprogress.css'// progress bar style
 import { getToken } from '@/utils/auth' // getToken from cookie
 import { buildMenus } from '@/api/menu'
 import { filterAsyncRouter } from './store/modules/permission'
+import { userOpt,roleOpt } from '@/sqlMap.js'
 
 NProgress.configure({ showSpinner: false })// NProgress Configuration
 
@@ -52,6 +53,8 @@ router.beforeEach((to, from, next) => {
 })
 
 export const loadMenus = (next, to) => {
+    var user=this._vm.$storage.get('userInfo')
+    //js递归成特定数据格式
   buildMenus().then(res => {
     const asyncRouter = filterAsyncRouter(res)
     asyncRouter.push({ path: '*', redirect: '/404', hidden: true })

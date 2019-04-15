@@ -71,7 +71,12 @@ const base = {
 }
 
 const userOpt = {
-    getUser: 'select * from user where username=?'
+    getUser: 'select * from user where username="?"',
+    getOne: 'select * from user where id=?',
+    login: 'select * from user where username="?" and password="?"',
+}
+const roleOpt = {
+    find: 'select * from  users_roles ur LEFT JOIN role r ON r.id=ur.role_id where ur.user_id=?',
 }
 
 const work = {
@@ -83,5 +88,6 @@ module.exports = {
     pageList,
     userOpt,
     work,
-    base
+    base,
+    roleOpt
 };
