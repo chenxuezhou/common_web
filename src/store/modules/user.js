@@ -76,8 +76,14 @@ const user = {
                 var user=JSON.parse(this._vm.$storage.get('userInfo')) 
                 var sql=userOpt.getOne.replace('?',user.id)
                 this._vm.$http.post('action', { sql: sql }).then(res => {
-                    setUserInfo(res.data[0], commit)
-                    resolve(res.data[0])
+                   user= res.data[0]
+                    sql=roleOpt.find.replace('?',user.id)
+                    this._vm.$http.post('action', { sql: sql }).then(res => {
+                        user.roles=res.data
+                        setUserInfo(user, commit)
+                        resolve(res.data[0])
+                    })
+                  
                 }).catch(error => {
                     reject(error)
                 })

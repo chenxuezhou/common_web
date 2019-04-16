@@ -27,6 +27,7 @@
 <script>
 import { md5 } from '@/utils/md5'
 import Cookies from 'js-cookie'
+import { setToken } from '@/utils/auth' 
 export default {
   name: 'Login',
   data() {
@@ -87,6 +88,7 @@ export default {
           }
           this.$store.dispatch('Login', user).then(() => {
             this.loading = false
+            setToken('Admin-Token',user.rememberMe)
             this.$router.push({ path: this.redirect || '/' })
           }).catch(() => {
             this.loading = false

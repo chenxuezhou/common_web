@@ -19,6 +19,7 @@ router.beforeEach((to, from, next) => {
   NProgress.start() // start progress bar
   if (getToken()) {
     // 已登录且要跳转的页面是登录页
+    debugger
     if (to.path === '/login') {
       next({ path: '/' })
       NProgress.done() // if current page is dashboard will not trigger	afterEach hook, so manually handle it
