@@ -6,6 +6,7 @@ import { getToken } from '@/utils/auth' // getToken from cookie
 import { buildMenus } from '@/api/menu'
 import { filterAsyncRouter } from './store/modules/permission'
 import { userOpt,roleOpt } from '@/sqlMap.js'
+import axios from 'axios'
 
 NProgress.configure({ showSpinner: false })// NProgress Configuration
 
@@ -53,10 +54,12 @@ router.beforeEach((to, from, next) => {
 })
 
 export const loadMenus = (next, to) => {
-    var user=this._vm.$storage.get('userInfo')
+    // debugger
+    var user=localStorage.getItem('userInfo')
     //js递归成特定数据格式
-  buildMenus().then(res => {
-    const asyncRouter = filterAsyncRouter(res)
+  
+    axios.get('build', { id: user.id }).then(res => {
+    const asyncRouter = filterAsyncRouter(res.data)
     asyncRouter.push({ path: '*', redirect: '/404', hidden: true })
     store.dispatch('GenerateRoutes', asyncRouter).then(() => { // 存储路由
       router.addRoutes(asyncRouter) // 动态添加可访问路由表

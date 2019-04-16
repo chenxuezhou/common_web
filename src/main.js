@@ -21,11 +21,11 @@ Vue.prototype.$storage = storage
 Vue.use(iView);
 Vue.use(ElementUI, { locale })
 Vue.config.productionTip = false
-const instance = axios.create({
-    baseURL: 'http://localhost:3000/api/base/', // api 的 base_url
-    
-})
-Vue.prototype.$http = instance;
+axios.defaults.baseURL = 'http://localhost:3000/api/base/' 
+// const instance = axios.create({
+//     baseURL: 'http://localhost:3000/api/base/', // api 的 base_url
+// })
+Vue.prototype.$http = axios;
 
 new Vue({
   el: '#app',

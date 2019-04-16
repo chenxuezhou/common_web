@@ -73,7 +73,7 @@ const user = {
         // 获取用户信息
         GetInfo({ commit }) {
             return new Promise((resolve, reject) => {
-                var user= this._vm.$storage.get('userInfo')
+                var user=JSON.parse(this._vm.$storage.get('userInfo')) 
                 var sql=userOpt.getOne.replace('?',user.id)
                 this._vm.$http.post('action', { sql: sql }).then(res => {
                     setUserInfo(res.data[0], commit)
