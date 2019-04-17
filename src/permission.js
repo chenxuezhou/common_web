@@ -19,7 +19,7 @@ router.beforeEach((to, from, next) => {
   NProgress.start() // start progress bar
   if (getToken()) {
     // 已登录且要跳转的页面是登录页
-    debugger
+    //  debugger
     if (to.path === '/login') {
       next({ path: '/' })
       NProgress.done() // if current page is dashboard will not trigger	afterEach hook, so manually handle it
@@ -27,6 +27,7 @@ router.beforeEach((to, from, next) => {
       if (store.getters.roles.length === 0) { // 判断当前用户是否已拉取完user_info信息
         store.dispatch('GetInfo').then(res => { // 拉取user_info
           // 动态路由，拉取菜单
+          console.log('获取用户信息及角色')
           loadMenus(next, to)
         }).catch((err) => {
           console.log(err)
@@ -37,9 +38,12 @@ router.beforeEach((to, from, next) => {
       // 登录时未拉取 菜单，在此处拉取
       } else if (store.getters.loadMenus) {
         // 修改成false，防止死循环
-        store.dispatch('updateLoadMenus').then(res => {})
+        store.dispatch('updateLoadMenus').then(res => {
+            console.log('loadMenus='+store.getters.loadMenus)
+        })
         loadMenus(next, to)
       } else {
+        console.log(to)
         next()
       }
     }
@@ -55,15 +59,18 @@ router.beforeEach((to, from, next) => {
 })
 
 export const loadMenus = (next, to) => {
-    // debugger
-    var user=localStorage.getItem('userInfo')
+    
+    var user=JSON.parse(localStorage.getItem('userInfo')) 
     //js递归成特定数据格式
   
-    axios.get('build', { id: user.id }).then(res => {
+    axios.post('build', { id: user.id }).then(res => {
     const asyncRouter = filterAsyncRouter(res.data)
-    asyncRouter.push({ path: '*', redirect: '/404', hidden: true })
+    
+    // asyncRouter.push({ path: '*', redirect: '/404', hidden: true })
     store.dispatch('GenerateRoutes', asyncRouter).then(() => { // 存储路由
+    //   debugger
       router.addRoutes(asyncRouter) // 动态添加可访问路由表
+      console.log(router)
       next({ ...to, replace: true })// hack方法 确保addRoutes已完成
     })
   })

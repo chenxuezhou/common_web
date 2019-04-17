@@ -66,9 +66,9 @@ export default {
   },
   created() {
     this.getRoles()
-    this.$nextTick(() => {
-      this.init()
-    })
+    // this.$nextTick(() => {
+    //   this.init()
+    // })
   },
   methods: {
     parseTime,
