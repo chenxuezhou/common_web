@@ -9,7 +9,7 @@ var ascoltatore = {
 
 var settings = {
   port: 1883,
-  backend: ascoltatore
+//   backend: ascoltatore
 };
 
 var server = new mosca.Server(settings);
