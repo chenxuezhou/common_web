@@ -1,27 +1,21 @@
 <template>
   <el-dialog :append-to-body="true" :visible.sync="dialog" :title="isAdd ? '新增' : '编辑'" width="500px">
     <el-form ref="form" :model="form" :rules="rules" size="small" label-width="80px">
-      <el-form-item label="创建人用户id">
-        <el-input v-model="form.userId" style="width: 370px;"/>
+      <el-form-item label="订阅" prop="dinyue">
+            <el-input v-model="form.dinyue" style="width: 370px;"/>
+
       </el-form-item>
-      <el-form-item label="会议时间">
-        <el-input v-model="form.createTime" style="width: 370px;"/>
+      <el-form-item label="主题" prop="topic">
+            <el-input v-model="form.topic" style="width: 370px;"/>
+
       </el-form-item>
-      <el-form-item label="会议主持人">
-        <el-input v-model="form.hostPer" style="width: 370px;"/>
+      <el-form-item label="用户id" prop="userId">
+            <el-input v-model="form.userId" style="width: 370px;"/>
+
       </el-form-item>
-      <el-form-item label="会议出席人">
-        <el-input v-model="form.outPer" style="width: 370px;"/>
-      </el-form-item>
-      <el-form-item label="会议地点">
-        <el-input v-model="form.address" style="width: 370px;"/>
-      </el-form-item>
-     
-      <el-form-item label="主题">
-        <el-input v-model="form.topic" style="width: 370px;"/>
-      </el-form-item>
-      <el-form-item label="内容">
-        <el-input v-model="form.content" style="width: 370px;"/>
+      <el-form-item label="收藏" prop="soucan">
+            <el-input v-model="form.soucan" style="width: 370px;"/>
+
       </el-form-item>
     </el-form>
     <div slot="footer" class="dialog-footer">
@@ -32,7 +26,7 @@
 </template>
 
 <script>
-import { add, edit } from '@/api/meeting'
+import { add, edit } from '@/api/sub'
 export default {
   props: {
     isAdd: {
@@ -49,15 +43,31 @@ export default {
       loading: false, dialog: false,
       form: {
         id: '',
-        userId: '',
-        createTime: '',
-        hostPer: '',
-        outPer: '',
-        address: '',
+        dinyue: '',
         topic: '',
-        content: ''
+        userId: '',
+        soucan: ''
       },
-      
+      rules: {
+          author: [
+              { required: true, message: '作者不能为空', trigger: 'blur' }
+          ],
+        id: [
+            {}
+        ],
+        dinyue: [
+            {required: true,message:'订阅',trigger: 'blur'}
+        ],
+        topic: [
+            {required: true,message:'主题',trigger: 'blur'}
+        ],
+        userId: [
+            {required: true,message:'用户id',trigger: 'blur'}
+        ],
+        soucan: [
+            {required: true,message:'收藏',trigger: 'blur'}
+        ]
+      }
     }
   },
   methods: {
@@ -105,13 +115,10 @@ export default {
       this.$refs['form'].resetFields()
       this.form = {
         id: '',
-        userId: '',
-        createTime: '',
-        hostPer: '',
-        outPer: '',
-        address: '',
+        dinyue: '',
         topic: '',
-        content: ''
+        userId: '',
+        soucan: ''
       }
     }
   }

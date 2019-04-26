@@ -78,10 +78,27 @@ const work = {
     delete: 'delete  from work where id=?'
 }
 
+const resource = {
+    getOne: 'select * from resource where id=?'
+}
+
+const pub_content = {
+    getOne: 'select * from pub_content where id=?'
+}
+
+
+const subOpt = {
+    find: 'select * from sub where user_id="?"',
+    update_dinyue:'update sub set dinyue=? where user_id="?" and topic="?"',
+    update_soucan:'update sub set soucan=? where user_id="?" and topic="?"'
+}
 
 module.exports = {
     pageList,
     userOpt,
     work,
-    base
+    base,
+    resource,
+    pub_content,
+    subOpt
 };

@@ -36,6 +36,11 @@ export const constantRouterMap = [
     hidden: true
   },
   {
+    path: '/pub_detail/:id',
+    component: () => import('@/views/home/detail'),
+    hidden: true
+  },
+  {
     path: '/redirect',
     component: Layout,
     hidden: true,
@@ -53,7 +58,7 @@ export const constantRouterMap = [
     children: [
       {
         path: 'dashboard',
-        component: () => import('@/views/dashboard/index'),
+        component: () => import('@/views/home/home'),
         name: '首页',
         meta: { title: '首页', icon: 'index', noCache: true }
       }
