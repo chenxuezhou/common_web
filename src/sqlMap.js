@@ -85,7 +85,10 @@ const resource = {
 const pub_content = {
     getOne: 'select * from pub_content where id=?'
 }
-
+const collect = {
+    find: 'select * from collect where user_id="?" AND pub_id=?',
+    delete:'delete from collect where user_id="?" AND pub_id=?'
+}
 
 const subOpt = {
     find: 'select * from sub where user_id="?"',
@@ -100,5 +103,6 @@ module.exports = {
     base,
     resource,
     pub_content,
-    subOpt
+    subOpt,
+    collect
 };

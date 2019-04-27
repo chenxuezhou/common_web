@@ -36,6 +36,8 @@
 <script>
 import { add, edit } from "@/api/pubContent";
 import { s1, s2, s3, s4 } from "@/constant";
+        
+
 export default {
   props: {
     isAdd: {
@@ -88,11 +90,15 @@ export default {
       fileIdList: []
     };
   },
+  created(){
+      
+  
+
+  },
   methods: {
     cancel() {
       this.resetForm();
-      this.fileIdList = [];
-      this.fileList = [];
+     
     },
     doSubmit() {
       this.loading = true;
@@ -101,6 +107,7 @@ export default {
       } else this.doEdit();
     },
     doAdd() {
+      this.$http.post("/mqtt", this.form).then(res => {})
       add(this.form)
         .then(res => {
           this.resetForm();
@@ -111,6 +118,7 @@ export default {
           });
           this.loading = false;
           this.$parent.$parent.init();
+        
         })
         .catch(err => {
           this.loading = false;
@@ -135,6 +143,8 @@ export default {
         });
     },
     resetForm() {
+      this.fileIdList = [];
+      this.fileList = [];
       this.dialog = false;
       this.$refs["form"].resetFields();
       this.form = {
