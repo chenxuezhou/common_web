@@ -74,9 +74,14 @@ const dish={
     getAll: 'select * from dish',
 }
 
+const v_order={
+    update:'update v_order set status=2 where id=?'
+}
+
 
 module.exports = {
     pageList,
     base,
-    dish
+    dish,
+    v_order
 };

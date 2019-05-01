@@ -12,6 +12,7 @@
             <el-table-column prop="description" label="介绍" />
             <el-table-column prop="age" label="岁数" />
             <el-table-column prop="dishId" label="菜品id" />
+            <el-table-column prop="count" label="月预约数" />
             <el-table-column prop="adress" label="住址" />
             <el-table-column label="操作" width="150px" align="center">
                 <template slot-scope="scope">
@@ -82,7 +83,12 @@ export default {
   created() {
     this.$nextTick(() => {
       this.init();
+    //   console.log(this.mixins)
+    // this.data.data[0].count=1
     });
+  },
+  mounted(){
+      console.log(this.data)
   },
   methods: {
     parseTime,

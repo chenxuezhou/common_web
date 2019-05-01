@@ -72,7 +72,7 @@ export default {
     handleLogin() {
       this.$refs.loginForm.validate(valid => {
         let pass = this.loginForm.password
-        if (pass !== this.md5Pwd) { pass = md5(pass) }
+        // if (pass !== this.md5Pwd) { pass = md5(pass) }
         const user = { username: this.loginForm.username, password: pass, rememberMe: this.loginForm.rememberMe }
         if (valid) {
           this.loading = true
