@@ -36,6 +36,11 @@ export const constantRouterMap = [
     hidden: true
   },
   {
+    path: '/qrcode',
+    component: () => import('@/views/nested/menu2/index'),
+    hidden: true
+  },
+  {
     path: '/redirect',
     component: Layout,
     hidden: true,

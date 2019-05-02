@@ -1,5 +1,6 @@
 <template>
   <div class="app-container">
+    
     <eHeader :roles="roles" :query="query"/>
     <!--表格渲染-->
     <el-table v-loading="loading" :data="data" size="small" border style="width: 100%;">
@@ -20,8 +21,14 @@
           <span>{{ parseTime(scope.row.createTime) }}</span>
         </template>
       </el-table-column>
+      <el-table-column  label="生成二维码">
+        <template slot-scope="scope">
+          <el-button slot="reference" @click="createQrc(scope.row)" size="mini">生成二维码</el-button>
+        </template>
+      </el-table-column>
       <el-table-column label="操作" width="150px" align="center">
         <template slot-scope="scope">
+         
           <edit v-if="checkPermission(['ADMIN','USER_ALL','USER_EDIT'])" :data="scope.row" :roles="roles" :sup_this="sup_this"/>
           <el-popover
             v-if="checkPermission(['ADMIN','USER_ALL','USER_DELETE'])"
@@ -45,6 +52,11 @@
       layout="total, prev, pager, next, sizes"
       @size-change="sizeChange"
       @current-change="pageChange"/>
+     
+      <div class="banner-box">
+      <canvas id="qrccode-canvas"></canvas>
+    </div>
+  
   </div>
 </template>
 
@@ -55,19 +67,29 @@ import { del } from '@/api/user'
 import { getRoleTree } from '@/api/role'
 import { parseTime } from '@/utils/index'
 import eHeader from './module/header'
+import Cookies from 'js-cookie'
 import edit from './module/edit'
+var canvas = ''
+var QRCode = require('qrcode')
 export default {
   components: { eHeader, edit },
   mixins: [initData],
   data() {
     return {
-      roles: [], delLoading: false, sup_this: this
+      roles: [], delLoading: false, sup_this: this,
+      bedialog:false
     }
   },
   created() {
     this.getRoles()
     this.$nextTick(() => {
       this.init()
+    })
+  },
+  mounted () {
+    this.$nextTick(function () {
+      // DOM操作
+      canvas = document.getElementById('qrccode-canvas')
     })
   },
   methods: {
@@ -105,6 +127,24 @@ export default {
     getRoles() {
       getRoleTree().then(res => {
         this.roles = res
+      })
+    },
+    createQrc: function (row) {
+      if (!row) {
+        window.alert('链接不能为空')
+        return false
+      }
+      this.bedialog=true
+      var obj={username:Cookies.get('username'),params:row}
+      
+      var url='http://localhost:3000/api/base/log?obj='+encodeURI(JSON.stringify(obj))
+      console.log(url)
+      QRCode.toCanvas(canvas,JSON.stringify(obj), (error) => {
+        if (error) {
+          console.log(error)
+        } else {
+          console.log('success')
+        }
       })
     }
   }
