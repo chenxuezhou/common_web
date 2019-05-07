@@ -5,6 +5,7 @@
     <el-select v-model="query.type" clearable placeholder="类型" class="filter-item" style="width: 130px">
       <el-option v-for="item in queryTypeOptions" :key="item.key" :label="item.display_name" :value="item.key"/>
     </el-select>
+   
     <el-button class="filter-item" size="mini" type="primary" icon="el-icon-search" @click="toQuery">搜索</el-button>
     <!-- 新增 -->
     <div style="display: inline-block;margin: 0px 2px;">
@@ -15,7 +16,7 @@
         type="primary"
         icon="el-icon-plus"
         @click="$refs.form.dialog = true">新增</el-button>
-      <eForm ref="form" :is-add="true"/>
+      <eForm ref="form" :is-add="true" :options="options"/>
     </div>
   </div>
 </template>
@@ -23,12 +24,19 @@
 <script>
 import checkPermission from '@/utils/permission' // 权限判断函数
 import eForm from './form'
+import { dish } from "@/sqlMap.js";
 export default {
   components: { eForm },
   props: {
     query: {
       type: Object,
       required: true
+    },
+     options: {
+      type: Array,
+      default: () => {
+        return [];
+      }
     }
   },
   data() {
@@ -37,6 +45,9 @@ export default {
         { key: 'name', display_name: '名称' }
       ]
     }
+  },
+  created(){
+      
   },
   methods: {
     checkPermission,

@@ -95,7 +95,8 @@ export default {
     beforeInit() {
       this.url = "api/vOrder";
       const sort = "id,desc";
-      this.params = { page: this.page, size: this.size, sort: sort };
+      var userInfo=  JSON.parse(localStorage.getItem('userInfo')) 
+      this.params = { page: this.page, size: this.size, sort: sort ,cusId:userInfo.id};
       return true;
     },
     subDelete(id) {

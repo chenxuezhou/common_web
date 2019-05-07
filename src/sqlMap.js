@@ -74,14 +74,23 @@ const dish={
     getAll: 'select * from dish',
 }
 
+const address={
+    find: 'select * from address where cus_id=?',
+}
+
 const v_order={
     update:'update v_order set status=2 where id=?'
 }
 
+const userOpt={
+    getOne:'select * from user where username="?"'
+}
 
 module.exports = {
     pageList,
     base,
     dish,
-    v_order
+    v_order,
+    address,
+    userOpt
 };

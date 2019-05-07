@@ -1,6 +1,9 @@
 <template>
     <div class="app-container">
-        <eHeader :query="query" />
+        <eHeader :query="query" :options="options" />
+     <el-select v-if="!checkPermission(['ADMIN'])" v-model="dish_id" clearable placeholder="类型" class="filter-item" style="width: 130px">
+      <el-option v-for="item in options" :key="item.id" :label="item.name" :value="item.id"/>
+    </el-select>
         <!--表格渲染-->
         <el-table v-loading="loading" :data="data" size="small" border style="width: 100%;">
             <el-table-column prop="name" label="名称" />
@@ -16,7 +19,7 @@
             <el-table-column prop="adress" label="住址" />
             <el-table-column label="操作" width="150px" align="center">
                 <template slot-scope="scope">
-                    <edit v-if="checkPermission(['ADMIN'])" :data="scope.row" :sup_this="sup_this" />
+                    <edit v-if="checkPermission(['ADMIN'])" :data="scope.row" :sup_this="sup_this" :options="options" />
                     <el-popover v-if="checkPermission(['ADMIN'])" :ref="scope.row.id" placement="top" width="180">
                         <p>确定删除本条数据吗？</p>
                         <div style="text-align: right; margin: 0">
@@ -48,9 +51,13 @@
                 </el-form-item>
                 <el-form-item label="厨师id" prop="description">
                     <el-input v-model="form.cook_id" style="width: 370px;" />
-
                 </el-form-item>
-
+                <el-form-item label="地址" >
+                    <el-select v-if="!checkPermission(['ADMIN'])" v-model="form.address" clearable placeholder="地址" class="filter-item" style="width: 130px">
+                    <el-option v-for="item in addressList" :key="item.id" :label="item.name" :value="item.id"/>
+                </el-select>
+                </el-form-item>
+                
             </el-form>
             <div slot="footer" class="dialog-footer">
 
@@ -69,6 +76,9 @@ import { del } from "@/api/cook";
 import { parseTime } from "@/utils/index";
 import eHeader from "./module/header";
 import edit from "./module/edit";
+import { dish ,address,userOpt} from "@/sqlMap.js";
+import { login, getInfo } from '@/api/login'
+import Cookies from 'js-cookie'
 export default {
   components: { eHeader, edit },
   mixins: [initData],
@@ -77,10 +87,40 @@ export default {
       delLoading: false,
       sup_this: this,
       form: {},
-      dialog: false
+      dialog: false,
+      options:[],
+      dish_id:'',
+      addressList:[]
     };
   },
+ 
   created() {
+    
+    var sql = dish.getAll
+        this.$http.post("action", {
+            sql: sql
+        }).then(res => {
+            this.options=res.data
+    });
+    const username = Cookies.get('username')
+    getInfo().then(res => {
+        //   debugger
+           sql= userOpt.getOne.replace('?',res.username)
+      this.$http.post("action", {
+            sql: sql
+        }).then(res => {
+          
+           var user=res.data[0]
+           sql= address.find.replace('?',user.id)
+           this.$http.post("action", {
+            sql: sql
+        }).then(res => {
+            this.addressList=res.data
+        })
+    });
+        })
+    
+    
     this.$nextTick(() => {
       this.init();
     //   console.log(this.mixins)

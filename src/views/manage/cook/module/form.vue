@@ -24,7 +24,7 @@
 
       </el-form-item>
       <el-form-item label="菜品id" prop="dishId">
-                <el-select v-model="form.dishId" placeholder="请选择">
+                <el-select v-model="form.dishId" placeholder="请选择" style="width: 370px;">
                     <el-option v-for="item in options" :key="item.id" :label="item.name" :value="item.id">
                     </el-option>
                 </el-select>
@@ -55,6 +55,12 @@ export default {
     sup_this: {
       type: Object,
       default: null
+    },
+    options:{
+      type: Array,
+      default: () => {
+return []
+}
     }
   },
   data() {
@@ -85,17 +91,10 @@ export default {
 
 
       },
-      options:[]
+    //   options:[]
     }
   },
-    created() {
-        var sql = dish.getAll
-        this.$http.post("action", {
-            sql: sql
-        }).then(res => {
-            this.options=res.data
-    });
-    },
+   
   methods: {
     cancel() {
       this.resetForm()

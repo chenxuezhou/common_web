@@ -1,11 +1,11 @@
 <template>
-  <div>
-    <el-button size="mini" type="success" @click="to">编辑</el-button>
-    <eForm ref="form" :sup_this="sup_this" :is-add="false"/>
-  </div>
+    <div>
+        <el-button size="mini" type="success" @click="to">编辑</el-button>
+        <eForm ref="form" :sup_this="sup_this" :is-add="false" :options="options" />
+    </div>
 </template>
 <script>
-import eForm from './form'
+import eForm from "./form";
 export default {
   components: { eForm },
   props: {
@@ -16,11 +16,17 @@ export default {
     sup_this: {
       type: Object,
       required: true
+    },
+    options: {
+      type: Array,
+      default: () => {
+        return [];
+      }
     }
   },
   methods: {
     to() {
-      const _this = this.$refs.form
+      const _this = this.$refs.form;
       _this.form = {
         id: this.data.id,
         name: this.data.name,
@@ -29,16 +35,16 @@ export default {
         age: this.data.age,
         dishId: this.data.dishId,
         adress: this.data.adress
-      }
-      _this.dialog = true
+      };
+      _this.dialog = true;
     }
   }
-}
+};
 </script>
 
 <style scoped>
-  div{
-    display: inline-block;
-    margin-right: 3px;
-  }
+div {
+  display: inline-block;
+  margin-right: 3px;
+}
 </style>
