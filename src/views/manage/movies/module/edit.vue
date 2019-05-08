@@ -1,0 +1,50 @@
+<template>
+  <div>
+    <el-button size="mini" type="success" @click="to">编辑</el-button>
+    <eForm ref="form" :sup_this="sup_this" :is-add="false"/>
+  </div>
+</template>
+<script>
+import eForm from './form'
+export default {
+  components: { eForm },
+  props: {
+    data: {
+      type: Object,
+      required: true
+    },
+    sup_this: {
+      type: Object,
+      required: true
+    }
+  },
+  methods: {
+    to() {
+      const _this = this.$refs.form
+      _this.form = {
+        id: this.data.id,
+        title: this.data.title,
+        url: this.data.url,
+        info: this.data.info,
+        logo: this.data.logo,
+        score: this.data.score,
+        playnum: this.data.playnum,
+        commentnum: this.data.commentnum,
+        releaseTime: this.data.releaseTime,
+        addtime: this.data.addtime,
+        type: this.data.type,
+        area: this.data.area,
+        topic: this.data.topic
+      }
+      _this.dialog = true
+    }
+  }
+}
+</script>
+
+<style scoped>
+  div{
+    display: inline-block;
+    margin-right: 3px;
+  }
+</style>
