@@ -74,6 +74,11 @@ const dish={
     getAll: 'select * from dish',
 }
 
+
+const cookOpt={
+    find: 'select * from cook where dish_id=?',
+}
+
 const address={
     find: 'select * from address where cus_id=?',
 }
@@ -92,5 +97,6 @@ module.exports = {
     dish,
     v_order,
     address,
-    userOpt
+    userOpt,
+    cookOpt
 };

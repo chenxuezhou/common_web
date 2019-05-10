@@ -1,8 +1,8 @@
 <template>
     <div class="app-container">
         <eHeader :query="query" :options="options" />
-     <el-select v-if="!checkPermission(['ADMIN'])" v-model="dish_id" clearable placeholder="类型" class="filter-item" style="width: 130px">
-      <el-option v-for="item in options" :key="item.id" :label="item.name" :value="item.id"/>
+     <el-select v-if="!checkPermission(['ADMIN'])" v-model="dish_id" clearable placeholder="类型" class="filter-item" style="width: 130px" @change="findCook" >
+      <el-option v-for="item in options" :key="item.id" :label="item.name" :value="item.id" />
     </el-select>
         <!--表格渲染-->
         <el-table v-loading="loading" :data="data" size="small" border style="width: 100%;">
@@ -76,7 +76,7 @@ import { del } from "@/api/cook";
 import { parseTime } from "@/utils/index";
 import eHeader from "./module/header";
 import edit from "./module/edit";
-import { dish ,address,userOpt} from "@/sqlMap.js";
+import { dish ,address,userOpt,cookOpt} from "@/sqlMap.js";
 import { login, getInfo } from '@/api/login'
 import Cookies from 'js-cookie'
 export default {
@@ -177,6 +177,20 @@ export default {
         })
         .then(res => {
            this.dialog=false
+        });
+    },
+    findCook(event) {
+        // debugger
+      var sql=cookOpt.find.replace('?',event)
+        this.$http.post("action", {
+          sql:sql
+        })
+        .then(res => {
+           this.data=res.data.map(item=>{
+               item.createTime=item.create_time
+               item.dishId=item.dish_id
+               return item
+           })
         });
     }
   }

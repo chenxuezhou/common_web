@@ -8,7 +8,7 @@
       <el-table-column prop="cusId" label="用户id"/>
       <el-table-column prop="orderId" label="订单id"/>
       <el-table-column prop="cookId" label="私厨id"/>
-      <el-table-column label="操作" width="150px" align="center">
+      <el-table-column v-if="checkPermission(['ADMIN'])" label="操作" width="150px" align="center">
         <template slot-scope="scope">
           <edit v-if="checkPermission(['ADMIN'])" :data="scope.row" :sup_this="sup_this"/>
           <el-popover

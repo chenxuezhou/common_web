@@ -37,7 +37,7 @@
                 </template>
             </el-table-column>
         </el-table>
-        <el-dialog :append-to-body="true" :visible.sync="dialog" :title="'预约'" width="500px">
+        <el-dialog :append-to-body="true" :visible.sync="dialog" :title="'评价'" width="500px">
             <el-form ref="form" :model="form" size="small" label-width="80px">
 
                  <!-- <el-form-item label="客户id" prop="name">
@@ -50,7 +50,7 @@
                 </el-form-item>
                 
                 <el-form-item label="内容" prop="description">
-                    <el-input type="texterea" v-model="form.comment" style="width: 370px;" />
+                    <el-input type="textarea" v-model="form.comment" style="width: 370px;" />
 
                 </el-form-item>
 

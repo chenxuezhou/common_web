@@ -57,6 +57,7 @@ export default {
     beforeInit() {
       this.url = 'api/address'
       const sort = 'id,desc'
+      debugger
       var userInfo=  JSON.parse(localStorage.getItem('userInfo')) 
       this.params = { page: this.page, size: this.size, sort: sort,cusId:userInfo.id  }
       return true
