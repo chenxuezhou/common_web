@@ -3,6 +3,7 @@
     <eHeader :query="query"/>
     <!--表格渲染-->
     <el-table v-loading="loading" :data="data" size="small" border style="width: 100%;">
+      <el-table-column prop="name" label="名称"/>
       <el-table-column prop="toiletnum" label="卫浴数目"/>
       <el-table-column prop="parlournum" label="客厅数目"/>
       <el-table-column prop="createTime" label="创建时间">
@@ -11,7 +12,7 @@
         </template>
       </el-table-column>
       <el-table-column prop="cover" label="资源id"/>
-      <el-table-column prop="name" label="名称"/>
+      
       <el-table-column prop="area" label="城市"/>
       <el-table-column prop="cusId" label="用户id"/>
       <el-table-column prop="bedroomnum" label="居室数目"/>

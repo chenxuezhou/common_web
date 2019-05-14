@@ -10,7 +10,7 @@
             <el-input v-model="form.parlournum" style="width: 370px;"/>
 
       </el-form-item>
-      <el-form-item label="创建时间" prop="createTime">
+      <!-- <el-form-item label="创建时间" prop="createTime">
             <el-date-picker
                     v-model="form.createTime"
                     type="date"
@@ -18,7 +18,7 @@
                     placeholder="选择日期">
             </el-date-picker>
 
-      </el-form-item>
+      </el-form-item> -->
       <el-form-item label="资源id" prop="cover">
             <el-input v-model="form.cover" style="width: 370px;"/>
 
@@ -28,36 +28,49 @@
 
       </el-form-item>
       <el-form-item label="城市" prop="area">
-            <el-input v-model="form.area" style="width: 370px;"/>
-
-      </el-form-item>
-      <el-form-item label="用户id" prop="cusId">
-                <el-select v-model="form.cusId" placeholder="请选择" style="width: 370px;">
-                    <el-option v-for="item in options" :key="item.id" :label="item.name" :value="item.id">
+          
+             <el-select v-model="form.area" placeholder="请选择" style="width: 370px;">
+                    <el-option v-for="item in cityList" :key="item" :label="item" :value="item">
                     </el-option>
                 </el-select>
 
+
+      </el-form-item>
+      <el-form-item label="用户id" prop="cusId">
+          <el-input v-model="form.cusId" style="width: 370px;"/>
+               
       </el-form-item>
       <el-form-item label="居室数目" prop="bedroomnum">
             <el-input v-model="form.bedroomnum" style="width: 370px;"/>
 
       </el-form-item>
       <el-form-item label="房屋类型" prop="housetype">
-            <el-input v-model="form.housetype" style="width: 370px;"/>
+ 
+             <el-select v-model="form.housetype" placeholder="请选择" style="width: 370px;">
+                    <el-option v-for="item in houseList" :key="item.type" :label="item.name" :value="item.type">
+                    </el-option>
+                </el-select>
 
       </el-form-item>
       <el-form-item label="出租类型" prop="rentaltype">
-            <el-input v-model="form.rentaltype" style="width: 370px;"/>
-
-      </el-form-item>
-      <el-form-item label="起租单位" prop="rentalperiodunit">
-            <el-input v-model="form.rentalperiodunit" style="width: 370px;"/>
-
+            <!-- <el-input v-model="form.rentaltype" style="width: 370px;"/> -->
+ <el-select v-model="form.rentaltype" placeholder="请选择" style="width: 370px;">
+                    <el-option v-for="item in rentalList" :key="item.type" :label="item.name" :value="item.type">
+                    </el-option>
+                </el-select>
       </el-form-item>
       <el-form-item label="起租时间" prop="rentalperiod">
             <el-input v-model="form.rentalperiod" style="width: 370px;"/>
 
       </el-form-item>
+      <el-form-item label="起租单位" prop="rentalperiodunit">
+            <!-- <el-input v-model="form.rentalperiodunit" style="width: 370px;"/> -->
+             <el-select v-model="form.rentalperiodunit" placeholder="请选择" style="width: 370px;">
+                    <el-option v-for="item in rentalPeriodUnitList" :key="item.type" :label="item.name" :value="item.type">
+                    </el-option>
+                </el-select>
+      </el-form-item>
+      
       <el-form-item label="价格" prop="rentalprice">
             <el-input v-model="form.rentalprice" style="width: 370px;"/>
 
@@ -88,6 +101,53 @@ export default {
   data() {
     return {
       loading: false, dialog: false,
+      cityList : ['墨尔本', '悉尼', '堪培拉', '黄金海岸', '布里斯班', '卧龙岗', '霍巴特', '珀斯'],
+      houseList : [
+    {
+        name: '公寓Apartment',
+        type: 'APARTMENT'
+    },
+    {
+        name: '别墅house',
+        type: 'HOUSE'
+    },
+    {
+        name: '其他',
+        type: 'other'
+    }
+],
+rentalList : [
+    {
+        name: '单间',
+        type: 'STUDIO'
+    },
+    {
+        name: '整租',
+        type: 'WHOLE'
+    },
+    {
+        name: '合租',
+        type: 'SUBLET'
+    },
+    {
+        name: '其他',
+        type: 'OTHERS'
+    }
+],
+rentalPeriodUnitList : [
+    {
+        name: 'YEAR',
+        type: 'YEAR'
+    },
+    {
+        name: 'MONTH',
+        type: 'MONTH'
+    },
+    {
+        name: 'DAY',
+        type: 'DAY'
+    },
+],
       form: {
         id: '',
         toiletnum: '',
@@ -130,14 +190,14 @@ export default {
       options:[]
     }
   },
-    created() {
-        var sql = cus.getAll
-        this.$http.post("action", {
-            sql: sql
-        }).then(res => {
-            this.options=res.data
-    });
-    },
+    // created() {
+    //     var sql = cus.getAll
+    //     this.$http.post("action", {
+    //         sql: sql
+    //     }).then(res => {
+    //         this.options=res.data
+    // });
+    // },
   methods: {
     cancel() {
       this.resetForm()

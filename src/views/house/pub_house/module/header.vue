@@ -34,10 +34,7 @@ export default {
   data() {
     return {
       queryTypeOptions: [
-        { key: 'toiletnum', display_name: '卫浴数目' },
-        { key: 'parlournum', display_name: '客厅数目' },
-        { key: 'name', display_name: '名称' },
-        { key: 'bedroomnum', display_name: '居室数目' }
+        { key: 'name', display_name: '名称' }
       ]
     }
   },
