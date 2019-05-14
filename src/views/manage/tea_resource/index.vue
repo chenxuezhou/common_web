@@ -10,7 +10,7 @@
         </template>
       </el-table-column>
       <el-table-column prop="type" label="教案类型"/>
-      <el-table-column prop="sort" label="文件后缀"/>
+      <el-table-column prop="fileType" label="文件地址"/>
       <el-table-column prop="isSpecial" label="是否是特色教案"/>
       <el-table-column prop="score" label="评分"/>
       <el-table-column prop="info" label="简介"/>

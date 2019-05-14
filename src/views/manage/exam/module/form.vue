@@ -6,8 +6,13 @@
             <el-input v-model="form.name" style="width: 370px;"/>
 
       </el-form-item>
-      <el-form-item label="试卷类型" prop="type">
-            <el-input v-model="form.type" style="width: 370px;"/>
+      <el-form-item label="学院" prop="type">
+             <el-select v-model="form.type" placeholder="请选择" style="width: 370px;">
+                 <el-option v-for="item in types" :key="item" :label="item" :value="item">
+                   
+                    </el-option>
+                </el-select>
+            
 
       </el-form-item>
       <el-form-item label="作答时间" prop="time">
@@ -19,20 +24,20 @@
 
       </el-form-item>
       <el-form-item label="出卷人编号" prop="createId">
-                <el-select v-model="form.createId" placeholder="请选择" style="width: 370px;">
-                    <el-option v-for="item in options" :key="item.id" :label="item.name" :value="item.id">
-                    </el-option>
+                <el-select v-model="form.createId" placeholder="请选择" style="width: 370px;" @change="getOne">
+                    <el-option v-for="item in options" :key="item.id" :label="item.id" :value="item.id">
+                </el-option>
                 </el-select>
 
       </el-form-item>
       <el-form-item label="出卷人名称" prop="createName">
-            <el-input v-model="form.createName" style="width: 370px;"/>
+            <el-input :readonly=true v-model="form.createName" style="width: 370px;"/>
 
       </el-form-item>
       <el-form-item label="考试开始时间" prop="startTime">
             <el-date-picker
                     v-model="form.startTime"
-                    type="date"
+                    type="datetime"
                     style="width: 370px;"
                     placeholder="选择日期">
             </el-date-picker>
@@ -41,7 +46,7 @@
       <el-form-item label="考试结束时间" prop="endTime">
             <el-date-picker
                     v-model="form.endTime"
-                    type="date"
+                    type="datetime"
                     style="width: 370px;"
                     placeholder="选择日期">
             </el-date-picker>
@@ -57,7 +62,7 @@
 
 <script>
 import { add, edit } from '@/api/exam'
-import { create } from "@/sqlMap.js";
+import { userOpt } from "@/sqlMap.js";
 
 export default {
   props: {
@@ -84,6 +89,7 @@ export default {
         startTime: '',
         endTime: ''
       },
+      types:['美术院','信工院'],
       rules: {
           author: [
               { required: true, message: '作者不能为空', trigger: 'blur' }
@@ -112,7 +118,7 @@ export default {
     }
   },
     created() {
-        var sql = create.getAll
+        var sql = userOpt.find
         this.$http.post("action", {
             sql: sql
         }).then(res => {
@@ -173,6 +179,15 @@ export default {
         startTime: '',
         endTime: ''
       }
+    },
+    getOne(event){
+        this.options.forEach(item=>{
+            if (item.id==event) {
+                this.form.createName=item.username
+            }
+        })
+        
+        console.log(event)
     }
   }
 }

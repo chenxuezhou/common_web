@@ -7,7 +7,12 @@
 
       </el-form-item>
       <el-form-item label="习题类型" prop="type">
-            <el-input v-model="form.type" style="width: 370px;"/>
+           <el-select v-model="form.type" placeholder="请选择" style="width: 370px;">
+                 <el-option v-for="item in types" :key="item.id" :label="item.name" :value="item.id">
+                   
+                    </el-option>
+                </el-select>
+            <!-- <el-input v-model="form.type" style="width: 370px;"/> -->
 
       </el-form-item>
       <el-form-item label="答案a" prop="ansA">
@@ -47,7 +52,7 @@
 
 <script>
 import { add, edit } from '@/api/topic'
-import { exam } from "@/sqlMap.js";
+import { examOpt } from "@/sqlMap.js";
 
 export default {
   props: {
@@ -106,11 +111,12 @@ export default {
             {required: true,message:'试卷id',trigger: 'blur'}
         ]
       },
-      options:[]
+      options:[],
+      types:[{id:1,name:'选择题'}],
     }
   },
     created() {
-        var sql = exam.getAll
+        var sql = examOpt.getAll
         this.$http.post("action", {
             sql: sql
         }).then(res => {

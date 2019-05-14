@@ -26,7 +26,7 @@ export default {
         name: this.data.name,
         createTime: this.data.createTime,
         type: this.data.type,
-        sort: this.data.sort,
+        fileType: this.data.fileType,
         isSpecial: this.data.isSpecial,
         score: this.data.score,
         info: this.data.info,

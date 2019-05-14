@@ -70,8 +70,9 @@ const base = {
     },
 }
 
-const dish={
-    getAll: 'select * from dish',
+const resource={
+    getAll: 'select * from resource',
+    getOne:'select * from resource where id=?'
 }
 
 
@@ -83,19 +84,20 @@ const address={
     find: 'select * from address where cus_id=?',
 }
 
-const v_order={
-    update:'update v_order set status=2 where id=?'
+const examOpt={
+    getAll:'select * from exam'
 }
 
 const userOpt={
-    getOne:'select * from user where username="?"'
+    getOne:'select * from user where username="?"',
+    find:'select u.* from user u left join users_roles ur on ur.user_id=u.id left join role r on r.id=ur.role_id where r.name="老师"'
 }
 
 module.exports = {
     pageList,
     base,
-    dish,
-    v_order,
+    resource,
+    examOpt,
     address,
     userOpt,
     cookOpt
