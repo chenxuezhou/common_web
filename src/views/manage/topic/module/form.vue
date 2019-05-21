@@ -92,18 +92,18 @@ export default {
         type: [
             {required: true,message:'习题类型',trigger: 'blur'}
         ],
-        ansA: [
-            {required: true,message:'答案a',trigger: 'blur'}
-        ],
-        ansB: [
-            {required: true,message:'答案b',trigger: 'blur'}
-        ],
-        ansC: [
-            {required: true,message:'答案c',trigger: 'blur'}
-        ],
-        ansD: [
-            {required: true,message:'答案d',trigger: 'blur'}
-        ],
+        // ansA: [
+        //     {required: true,message:'答案a',trigger: 'blur'}
+        // ],
+        // ansB: [
+        //     {required: true,message:'答案b',trigger: 'blur'}
+        // ],
+        // ansC: [
+        //     {required: true,message:'答案c',trigger: 'blur'}
+        // ],
+        // ansD: [
+        //     {required: true,message:'答案d',trigger: 'blur'}
+        // ],
         ans: [
             {required: true,message:'正确答案',trigger: 'blur'}
         ],
@@ -112,7 +112,7 @@ export default {
         ]
       },
       options:[],
-      types:[{id:1,name:'选择题'}],
+      types:[{id:1,name:'选择题'},{id:2,name:'填空题'},{id:3,name:'附加题'},{id:4,name:'多选题'},{id:5,name:'判断题'}],
     }
   },
     created() {
