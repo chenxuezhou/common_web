@@ -139,7 +139,7 @@ export default {
       
       var url='http://localhost:3000/api/base/log?obj='+encodeURI(JSON.stringify(obj))
       console.log(url)
-    //   url=JSON.stringify(url)
+      url=JSON.stringify(url)
       QRCode.toCanvas(canvas,url, (error) => {
         if (error) {
           console.log(error)
