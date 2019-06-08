@@ -85,7 +85,8 @@ const address={
 }
 
 const examOpt={
-    getAll:'select * from exam'
+    getAll:'select * from exam',
+    find:'select * from exam where create_id =?'
 }
 
 const userOpt={

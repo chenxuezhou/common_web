@@ -3,23 +3,15 @@
     <eHeader :query="query"/>
     <!--表格渲染-->
     <el-table v-loading="loading" :data="data" size="small" border style="width: 100%;">
-      <el-table-column prop="id" label="编号"/>
-      <el-table-column prop="name" label="试卷名称"/>
-      <el-table-column prop="type" label="试卷类型"/>
-      <el-table-column prop="time" label="作答时间"/>
-      <el-table-column prop="okScore" label="合格分"/>
-      <el-table-column prop="createId" label="出卷人编号"/>
-      <el-table-column prop="createName" label="出卷人名称"/>
-      <el-table-column prop="startTime" label="考试开始时间">
+      <el-table-column prop="username" label="名称"/>
+      <el-table-column prop="claId" label="班级id"/>
+      <el-table-column prop="claName" label="班级名称"/>
+      <el-table-column prop="createTime" label="创建日期">
         <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.startTime) }}</span>
+          <span>{{ parseTime(scope.row.createTime) }}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="endTime" label="考试结束时间">
-        <template slot-scope="scope">
-          <span>{{ parseTime(scope.row.endTime) }}</span>
-        </template>
-      </el-table-column>
+      <el-table-column prop="teaId" label="老师id"/>
       <el-table-column label="操作" width="150px" align="center">
         <template slot-scope="scope">
           <edit v-if="checkPermission(['ADMIN'])" :data="scope.row" :sup_this="sup_this"/>
@@ -51,11 +43,10 @@
 <script>
 import checkPermission from '@/utils/permission'
 import initData from '@/mixins/initData'
-import { del } from '@/api/exam'
+import { del } from '@/api/student'
 import { parseTime } from '@/utils/index'
 import eHeader from './module/header'
 import edit from './module/edit'
-import {examOpt} from '@/sqlMap'
 export default {
   components: { eHeader, edit },
   mixins: [initData],
@@ -73,16 +64,9 @@ export default {
     parseTime,
     checkPermission,
     beforeInit() {
-      this.url = 'api/exam'
+      this.url = 'api/student'
       const sort = 'id,desc'
-     
       this.params = { page: this.page, size: this.size, sort: sort }
-    //   debugger
-       if (checkPermission(['PERMISSION_ALL'])) {
-           var userInfo=JSON.parse(localStorage.getItem('userInfo'))
-         
-          this.params.createId=userInfo.id
-      }
       const query = this.query
       const type = query.type
       const value = query.value
