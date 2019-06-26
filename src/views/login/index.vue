@@ -3,12 +3,12 @@
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" label-position="left" label-width="0px" class="login-form">
       <h3 class="title">el-admin 后台管理系统</h3>
       <el-form-item prop="username">
-        <el-input v-model="loginForm.username" type="text" auto-complete="off" placeholder="账号">
+        <el-input v-model="loginForm.username" type="text" auto-complete="off" placeholder="账号" value="admin">
           <svg-icon slot="prefix" icon-class="user" class="el-input__icon" style="height: 39px;width: 13px;margin-left: 2px;" />
         </el-input>
       </el-form-item>
       <el-form-item prop="password">
-        <el-input v-model="loginForm.password" type="password" auto-complete="off" placeholder="密码" @keyup.enter.native="handleLogin">
+        <el-input v-model="loginForm.password" type="password" auto-complete="off" placeholder="密码" value="123456" @keyup.enter.native="handleLogin">
           <svg-icon slot="prefix" icon-class="password" class="el-input__icon" style="height: 39px;width: 13px;margin-left: 2px;" />
         </el-input>
       </el-form-item>
@@ -34,8 +34,8 @@ export default {
     return {
       md5Pwd: '',
       loginForm: {
-        username: '',
-        password: '',
+        username: 'admin',
+        password: '123456',
         rememberMe: false
       },
       loginRules: {
@@ -55,7 +55,7 @@ export default {
     }
   },
   created() {
-    this.getCookie()
+    // this.getCookie()
   },
   methods: {
     getCookie() {
@@ -91,6 +91,7 @@ export default {
             setToken('Admin-Token',user.rememberMe)
             this.$router.push({ path: this.redirect || '/' })
           }).catch(() => {
+              
             this.loading = false
           })
         } else {

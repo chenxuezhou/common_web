@@ -44,7 +44,8 @@
 
 <script>
 import checkPermission from '@/utils/permission'
-import initData from '@/mixins/initData'
+// import initData from '@/mixins/initData'
+import initData from '@/mixins/initNodeData'
 import { del } from '@/api/meeting'
 import { parseTime } from '@/utils/index'
 import eHeader from './module/header'
@@ -66,18 +67,26 @@ export default {
     parseTime,
     checkPermission,
     beforeInit() {
-      this.url = 'api/meeting'
-      const sort = 'id,desc'
+      this.url = 'meeting'
+      const sort = 'order by id desc'
       this.params = { page: this.page, size: this.size, sort: sort }
       const query = this.query
       const type = query.type
       const value = query.value
-      if (type && value) { this.params[type] = value }
+     
+      this.sort = sort;
+      this.like = {};
+      if (type && value) {
+        this.like[type] = value;
+      }
+      this.and = {};
+   
+      this.or = {};
       return true
     },
     subDelete(id) {
       this.delLoading = true
-      del(id).then(res => {
+      this.$http.post('action', { sql: 'delete from meeting where id='+id }).then(res => {
         this.delLoading = false
         this.$refs[id].doClose()
         this.init()

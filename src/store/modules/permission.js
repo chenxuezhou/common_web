@@ -27,7 +27,7 @@ export const filterAsyncRouter = (routers) => { // 遍历后台传来的路由�
       } else {
         const component = router.component
         router.component = loadView(component)
-        // debugger
+        
       }
     }
     if (router.children && router.children.length) {

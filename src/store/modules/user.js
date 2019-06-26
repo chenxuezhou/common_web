@@ -1,7 +1,8 @@
 import { login, getInfo } from '@/api/login'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import { parseTime } from '@/utils/index'
-import { userOpt,roleOpt } from '@/sqlMap.js'
+import { userOpt,roleOpt } from '../../sqlMap.js'
+import { Notification, MessageBox } from 'element-ui'
 const user = {
     state: {
         token: getToken(),
@@ -47,13 +48,17 @@ const user = {
             return new Promise((resolve, reject) => {
                 var sql = userOpt.login.replace('?', username).replace('?', password)
                 this._vm.$http.post('action', { sql: sql }).then(res => {
+                    
                     if (res.data.length==0) {
-                        reject('账号密码错误')
+                        // reject('账号密码错误')
+                        this._vm.$message.error('账号密码错误')
+                        return
                     }
                     var user = res.data[0]
                     sql=roleOpt.find.replace('?',user.id)
                     this._vm.$http.post('action', { sql: sql }).then(res => {
-                        user.roles=res.data
+                        user.roles=res.data.map(item=>{return item.name})
+                        
                         setToken('123', rememberMe)
                         commit('SET_TOKEN', '123')
                         setUserInfo(user, commit)
@@ -63,9 +68,9 @@ const user = {
                         resolve()
                     })
                    
-                }).catch(error => {
-                    reject(error)
                 })
+            }).catch(error => {
+                reject(error)
             })
             // login(username, password)
         },
@@ -79,7 +84,7 @@ const user = {
                    user= res.data[0]
                     sql=roleOpt.find.replace('?',user.id)
                     this._vm.$http.post('action', { sql: sql }).then(res => {
-                        user.roles=res.data
+                        user.roles=res.data.map(item=>{return item.name})
                         setUserInfo(user, commit)
                         resolve(res.data[0])
                     })
@@ -110,6 +115,7 @@ const user = {
 
 export const setUserInfo = (res, commit) => {
     // 如果没有任何权限，则赋予一个默认的权限，避免请求死循环
+    
     if (res.roles.length === 0) {
         commit('SET_ROLES', ['ROLE_SYSTEM_DEFAULT'])
     } else {

@@ -28,6 +28,7 @@ export default {
       const _this = this.$refs.form
       _this.roleIds = []
       _this.form = { id: this.data.id, username: this.data.username, email: this.data.email, enabled: this.data.enabled.toString(), roles: [] }
+      debugger
       this.data.roles.forEach(function(data, index) {
         _this.roleIds.push(data.id)
       })

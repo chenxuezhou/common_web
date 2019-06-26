@@ -1,12 +1,14 @@
 import store from '@/store'
 
 /**
+ * 在login 和getInfo设置角色权限码
  * @param {Array} value
  * @returns {Boolean}
  * @example see @/views/auth/directive.vue
  */
 export default function checkPermission(value) {
   if (value && value instanceof Array && value.length > 0) {
+    
     const roles = store.getters && store.getters.roles
     const permissionRoles = value
 
